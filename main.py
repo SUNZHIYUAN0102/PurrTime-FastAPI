@@ -8,7 +8,7 @@ import joblib
 app = FastAPI(title="Cat Behavior Classifier")
 
 # === 你模型的输入特征长度 ===
-EXPECTED_FEATURE_DIM = 31
+EXPECTED_FEATURE_DIM = 12
 
 # === 输入格式定义 ===
 class InputFeatures(BaseModel):
@@ -55,10 +55,11 @@ async def predict(input: InputFeatures):
         return {
             "class_id": predicted_index,
             "class_name": predicted_label,
-            "probabilities": prob_dict
+            "probabilities": prob_dict,
         }
 
     except HTTPException as e:
         raise e
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"服务器错误: {str(e)}")
+
